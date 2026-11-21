@@ -5,96 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deutscher Einstufungstest (A1 – C1)</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; direction: rtl; color: #1e293b; }
-        .container { max-width: 800px; background: #fff; margin: auto; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        h2, h3 { color: #0f172a; text-align: center; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 820px;
+            background: #fff;
+            margin: auto;
+            padding: 36px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        }
+        h2, h3 {
+            color: #0f172a;
+            text-align: center;
+            margin-top: 0;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
         .step { display: none; }
         .step.active { display: block; }
-        .btn { background: #2563eb; color: white; border: none; padding: 14px 28px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 25px; width: 100%; transition: background 0.3s; }
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px 26px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 22px;
+            width: 100%;
+            transition: background 0.25s;
+        }
         .btn:hover { background: #1d4ed8; }
-        .btn-record { background: #dc2626; width: auto; padding: 10px 20px; margin-top: 10px; }
-        .btn-record.recording { background: #059669; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        input[type="text"], input[type="email"], textarea { width: 100%; padding: 14px; margin: 10px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-        textarea { height: 120px; resize: vertical; }
-        .question-box { margin-bottom: 25px; background: #f8fafc; padding: 22px; border-radius: 10px; border-right: 6px solid #2563eb; }
-        audio { width: 100%; margin: 12px 0; }
-        label { display: block; margin: 10px 0; cursor: pointer; font-size: 15px; }
-        .level-badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 6px 18px; border-radius: 20px; font-weight: bold; margin-bottom: 20px; font-size: 16px; }
-        .germ-title { font-weight: bold; color: #334155; margin-bottom: 8px; display: block; }
-        .recording-status { font-size: 14px; color: #dc2626; font-weight: bold; margin-top: 8px; }
-        .audio-box { background: #f0fdf4; border-right-color: #16a34a; }
-        .drive-link-btn { display: inline-block; background: #0f172a; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; margin-top: 10px; }
+        .btn-record {
+            background: #dc2626;
+            width: auto;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .btn-record.recording {
+            background: #059669;
+            animation: pulse 1.4s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.55; }
+            100% { opacity: 1; }
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0 18px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        textarea {
+            height: 130px;
+            resize: vertical;
+        }
+        .question-box {
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-right: 5px solid #2563eb;
+        }
+        .audio-box {
+            background: #f0fdf4;
+            border-right-color: #16a34a;
+        }
+        .germ-title {
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 16px;
+            direction: ltr;
+            text-align: left;
+        }
+        .sub-q {
+            font-weight: bold;
+            color: #1e293b;
+            margin: 14px 0 6px 0;
+            direction: ltr;
+            text-align: left;
+        }
+        .options-ltr label {
+            direction: ltr;
+            text-align: left;
+        }
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .level-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 22px 0 14px 0;
+            font-size: 15px;
+        }
+        .recording-status {
+            font-size: 14px;
+            color: #dc2626;
+            font-weight: bold;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Deutscher Einstufungstest (A1 – C1)</h2>
-    <p style="text-align: center; color: #64748b;">اختبار تحديد مستوى شامل (قواعد، سماع، كتابة، وتحدث)</p>
-    
-    <!-- خطوة 1: بيانات الطالب -->
+    <p class="subtitle">اختبار تحديد مستوى شامل في اللغة الألمانية (استماع، قواعد، كتابة، وتحدث)</p>
+
+    <!-- الخطوة 1: بيانات الطالب -->
     <div id="user-info" class="step active">
         <h3>Willkommen! Bitte geben Sie Ihre Daten ein:</h3>
         <label>الاسم الكامل (Vollständiger Name):</label>
         <input type="text" id="userName" placeholder="أدخل اسمك هنا..." required>
+
         <label>البريد الإلكتروني (E-Mail-Adresse):</label>
         <input type="email" id="userEmail" placeholder="example@gmail.com" required>
+
         <button class="btn" onclick="startTest()">Test starten (ابدأ الاختبار)</button>
     </div>
 
-    <!-- خطوة 2: الأسئلة -->
+    <!-- الخطوة 2: الاختبار -->
     <div id="test-form" class="step">
-        
-        <!-- قسم السماع: Waschmaschine ist kaputt -->
-        <div class="level-badge">Teil 1: Hörverstehen (A1 - Waschmaschine ist kaputt)</div>
+
+        <!-- Hörverstehen A1 -->
+        <div class="level-badge" style="margin-top: 0;">Niveau A1 – Hörverstehen</div>
         <div class="question-box audio-box">
             <span class="germ-title">Hören Sie das Audio „Waschmaschine ist kaputt“ und beantworten Sie die Fragen:</span>
-            
-            <!-- مشغل الصوت الأساسي -->
             <audio controls preload="auto">
-                <source src="https://docs.google.com/uc?export=open&id=1QltBvnB5QEmmKXPLNWyI-_7IiSuPOK1m" type="audio/mpeg">
+                <source src="Waschmaschine_A1.mp3" type="audio/mpeg">
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
-            <!-- زر احتياطي مباشر في حال لم يشتغل المشغل تلقائياً -->
-            <div style="margin-top: 5px;">
-                <a href="https://drive.google.com/file/d/1QltBvnB5QEmmKXPLNWyI-_7IiSuPOK1m/view?usp=sharing" target="_blank" class="drive-link-btn">
-                    🎧 اضغط هنا للاستماع للملف إذا لم يعمل المشغل مباشرة
-                </a>
+            <div class="sub-q">1. Was ist das Problem mit der Waschmaschine?</div>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_wasch_1" value="a"> a) Sie funktioniert nicht mehr / ist kaputt.</label>
+                <label><input type="radio" name="q_wasch_1" value="b"> b) Sie ist ganz neu.</label>
+                <label><input type="radio" name="q_wasch_1" value="c"> c) Sie wäscht nur mit kaltem Wasser.</label>
             </div>
 
-            <p style="margin-top: 20px;"><strong>1. Was ist das Problem mit der Waschmaschine?</strong></p>
-            <label><input type="radio" name="q_wasch_1" value="a"> Sie funktioniert nicht mehr / ist kaputt</label>
-            <label><input type="radio" name="q_wasch_1" value="b"> Sie ist ganz neu</label>
-            <label><input type="radio" name="q_wasch_1" value="c"> Sie wäscht nur mit kaltem Wasser</label>
-
-            <p style="margin-top: 15px;"><strong>2. Wen ruft die Person an oder was muss man machen?</strong></p>
-            <label><input type="radio" name="q_wasch_2" value="a"> Einen Handwerker oder den Kundendienst informieren</label>
-            <label><input type="radio" name="q_wasch_2" value="b"> Die Waschmaschine in den Müll werfen</label>
-            <label><input type="radio" name="q_wasch_2" value="c"> Nichts tun</label>
+            <div class="sub-q">2. Was muss man laut dem Text tun oder wer hilft?</div>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_wasch_2" value="a"> a) Einen Techniker / Kundendienst rufen oder das Problem melden.</label>
+                <label><input type="radio" name="q_wasch_2" value="b"> b) Die Waschmaschine sofort verkaufen.</label>
+                <label><input type="radio" name="q_wasch_2" value="c"> c) Nichts unternehmen.</label>
+            </div>
         </div>
 
-        <!-- أسئلة قواعد إضافية -->
-        <div class="level-badge" style="margin-top: 25px;">Teil 2: Grammatik (قواعد)</div>
+        <!-- Grammatik A1 -->
+        <div class="level-badge">Niveau A1 – Grammatik</div>
         <div class="question-box">
             <span class="germ-title">3. Ergänzen Sie das Verb: „Ich ______ Anna und komme aus Berlin.“</span>
-            <label><input type="radio" name="q_a1_1" value="a"> bist</label>
-            <label><input type="radio" name="q_a1_1" value="b"> heiße</label>
-            <label><input type="radio" name="q_a1_1" value="c"> kommen</label>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_a1_1" value="a"> a) bist</label>
+                <label><input type="radio" name="q_a1_1" value="b"> heiße</label>
+                <label><input type="radio" name="q_a1_1" value="c"> kommen</label>
+            </div>
         </div>
 
-        <!-- الجزء الكتابي (Schreiben) -->
-        <div class="level-badge" style="margin-top: 25px;">Teil 3: Schriftlicher Ausdruck (التعبير الكتابي)</div>
         <div class="question-box">
-            <span class="germ-title">Schreiben Sie einen kurzen Text (ca. 40-50 Wörter) über Ihren Alltag:</span>
+            <span class="germ-title">4. Wie lautet der richtige Artikel? „______ Tisch ist neu.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_a1_2" value="a"> a) Der</label>
+                <label><input type="radio" name="q_a1_2" value="b"> b) Die</label>
+                <label><input type="radio" name="q_a1_2" value="c"> c) Das</label>
+            </div>
+        </div>
+
+        <!-- Grammatik A2 -->
+        <div class="level-badge">Niveau A2 – Grammatik</div>
+        <div class="question-box">
+            <span class="germ-title">5. Ergänzen Sie das Verb im Präteritum: „Letztes Jahr ______ ich in Spanien.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_a2_1" value="a"> a) war</label>
+                <label><input type="radio" name="q_a2_1" value="b"> b) bin</label>
+                <label><input type="radio" name="q_a2_1" value="c"> c) hatte</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <span class="germ-title">6. Welche Konjunktion passt? „Ich bleibe zu Hause, ______ ich krank bin.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_a2_2" value="a"> a) weil</label>
+                <label><input type="radio" name="q_a2_2" value="b"> b) dass</label>
+                <label><input type="radio" name="q_a2_2" value="c"> c) ob</label>
+            </div>
+        </div>
+
+        <!-- Grammatik B1 -->
+        <div class="level-badge">Niveau B1 – Grammatik</div>
+        <div class="question-box">
+            <span class="germ-title">7. Ergänzen Sie die Konjunktion: „______ du mehr gelernt hättest, hättest du die Prüfung bestanden.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_b1_1" value="a"> a) Wenn</label>
+                <label><input type="radio" name="q_b1_1" value="b"> b) Als</label>
+                <label><input type="radio" name="q_b1_1" value="c"> c) Ob</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <span class="germ-title">8. Ergänzen Sie das Passiv Präteritum: „Das Haus ______ im Jahr 1990 gebaut.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_b1_2" value="a"> a) ist</label>
+                <label><input type="radio" name="q_b1_2" value="b"> b) wurde</label>
+                <label><input type="radio" name="q_b1_2" value="c"> c) war</label>
+            </div>
+        </div>
+
+        <!-- Grammatik B2 -->
+        <div class="level-badge">Niveau B2 – Grammatik</div>
+        <div class="question-box">
+            <span class="germ-title">9. Ergänzen Sie die Präposition mit Genitiv: „______ des schlechten Wetters wurde der Flug annulliert.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_b2_1" value="a"> a) Wegen</label>
+                <label><input type="radio" name="q_b2_1" value="b"> b) Trotzdem</label>
+                <label><input type="radio" name="q_b2_1" value="c"> c) Anstatt</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <span class="germ-title">10. Ergänzen Sie den Konjunktiv II der Vergangenheit: „Wenn ich das gewusst hätte, ______ ich dir geholfen.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_b2_2" value="a"> a) hätte</label>
+                <label><input type="radio" name="q_b2_2" value="b"> b) würde</label>
+                <label><input type="radio" name="q_b2_2" value="c"> c) wäre</label>
+            </div>
+        </div>
+
+        <!-- Grammatik C1 -->
+        <div class="level-badge">Niveau C1 – Grammatik & Wortschatz</div>
+        <div class="question-box">
+            <span class="germ-title">11. Nominalstil: „Weil die Nachfrage gestiegen ist...“ -> „Aufgrund ______ Nachfrage...“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_c1_1" value="a"> a) der gestiegenen</label>
+                <label><input type="radio" name="q_c1_1" value="b"> b) die gestiegene</label>
+                <label><input type="radio" name="q_c1_1" value="c"> c) dem gestiegenen</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <span class="germ-title">12. Indirekte Rede (Konjunktiv I): „Er sagte, er ______ im Urlaub.“</span>
+            <div class="options-ltr">
+                <label><input type="radio" name="q_c1_2" value="a"> a) sei</label>
+                <label><input type="radio" name="q_c1_2" value="b"> b) wäre</label>
+                <label><input type="radio" name="q_c1_2" value="c"> c) ist</label>
+            </div>
+        </div>
+
+        <!-- الجزء الكتابي Schreiben -->
+        <div class="level-badge">Schriftlicher Ausdruck (الكتابة)</div>
+        <div class="question-box">
+            <span class="germ-title">Schreiben Sie einen kurzen Text auf Deutsch über sich selbst, Ihren Alltag oder Ihre Lernziele:</span>
             <textarea id="writingAnswer" placeholder="Schreiben Sie hier auf Deutsch..."></textarea>
         </div>
 
-        <!-- جزء التحدث والتسجيل الصوتي (Sprechen) -->
-        <div class="level-badge" style="margin-top: 25px;">Teil 4: Mündlicher Ausdruck (التحدث والسماع)</div>
+        <!-- جزء التحدث Sprechen -->
+        <div class="level-badge">Mündlicher Ausdruck (التحدث والتسجيل الصوتي)</div>
         <div class="question-box">
-            <span class="germ-title">Sprechen Sie über sich selbst (stellen Sie sich auf Deutsch vor). Klicken Sie auf Aufnahme:</span>
+            <span class="germ-title">Sprechen Sie auf Deutsch über sich und Ihre bisherigen Deutschkenntnisse. Klicken Sie auf Aufnahme:</span>
             <button type="button" id="recordBtn" class="btn btn-record" onclick="toggleRecording()">🔴 ابدأ التسجيل الصوتي</button>
             <div id="recordingStatus" class="recording-status">لم يتم التسجيل بعد</div>
             <audio id="audioPlayback" controls style="display:none; margin-top:10px;"></audio>
@@ -103,28 +299,35 @@
         <button class="btn" onclick="submitAnswers()">Ergebnisse absenden (إرسال الاختبار)</button>
     </div>
 
-    <!-- خطوة 3: رسالة الشكر (بدون إظهار المستوى) -->
+    <!-- الخطوة 3: رسالة الشكر بدون إظهار المستوى للطالب -->
     <div id="result-screen" class="step">
         <h3 style="color: #16a34a;">Vielen Dank!</h3>
-        <div style="text-align: center; margin-top: 30px; font-size: 18px; line-height: 1.8;">
+        <div style="text-align: center; margin-top: 25px; font-size: 18px; line-height: 1.9;">
             <p>لقد تم إرسال إجاباتك واختبارك بنجاح إلى إدارة الأكاديمية.</p>
-            <p>سيتم مراجعة الجزء الكتابي والتسجيل الصوتي وإرسال تقييم مستقبلك الدراسي عبر البريد الإلكتروني قريباً.</p>
+            <p>سيتم مراجعة إجاباتك والجزء الكتابي والتسجيل الصوتي وإبلاغك بتقييم مستواك قريباً.</p>
         </div>
     </div>
 </div>
 
 <script>
+    // اختياري: إذا أردت إرسال النتيجة تلقائياً إلى Google Apps Script Web App، ضع رابط الـ Web App هنا
+    const APPS_SCRIPT_WEB_APP_URL = "";
+
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
     let audioRecordedFlag = false;
 
     function startTest() {
-        var name = document.getElementById('userName').value;
-        var email = document.getElementById('userEmail').value;
-        if(!name || !email) { alert("Bitte füllen Sie Name und E-Mail aus!"); return; }
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        if (!name || !email) {
+            alert("Bitte füllen Sie Name und E-Mail aus!");
+            return;
+        }
         document.getElementById('user-info').classList.remove('active');
         document.getElementById('test-form').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function toggleRecording() {
@@ -137,17 +340,18 @@
                 .then(stream => {
                     mediaRecorder = new MediaRecorder(stream);
                     audioChunks = [];
-                    
+
                     mediaRecorder.ondataavailable = event => {
-                        audioChunks.push(event.data);
+                        if (event.data.size > 0) audioChunks.push(event.data);
                     };
 
                     mediaRecorder.onstop = () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' | 'audio/webm' });
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                         const audioUrl = URL.createObjectURL(audioBlob);
                         audioPlayback.src = audioUrl;
                         audioPlayback.style.display = 'block';
                         audioRecordedFlag = true;
+                        stream.getTracks().forEach(track => track.stop());
                     };
 
                     mediaRecorder.start();
@@ -156,7 +360,7 @@
                     recordBtn.classList.add('recording');
                     statusDiv.textContent = "جاري التسجيل الآن... تحدث باللغة الألمانية";
                 })
-                .catch(err => {
+                .catch(() => {
                     alert("تعذر الوصول إلى الميكروفون. يرجى السماح بالصلاحيات من المتصفح.");
                 });
         } else {
@@ -164,40 +368,75 @@
             isRecording = false;
             recordBtn.textContent = "🔴 إعادة التسجيل";
             recordBtn.classList.remove('recording');
-            statusDiv.textContent = "تم حفظ التسجيل بنجاح!";
+            statusDiv.textContent = "تم حفظ التسجيل بنجاح! يمكنك الاستماع إليه بالأسفل.";
         }
     }
 
+    function calculateLevel(correctCount, totalQuestions) {
+        const ratio = correctCount / totalQuestions;
+        if (ratio >= 0.85) return "C1";
+        if (ratio >= 0.68) return "B2";
+        if (ratio >= 0.50) return "B1";
+        if (ratio >= 0.30) return "A2";
+        return "A1";
+    }
+
     function submitAnswers() {
-        var name = document.getElementById('userName').value;
-        var email = document.getElementById('userEmail').value;
-        var writingAnswer = document.getElementById('writingAnswer').value;
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const writingAnswer = document.getElementById('writingAnswer').value.trim();
 
-        let totalScore = 0;
-        let answers = { 'q_wasch_1': 'a', 'q_wasch_2': 'a', 'q_a1_1': 'b' };
+        const answerKey = {
+            q_wasch_1: 'a',
+            q_wasch_2: 'a',
+            q_a1_1: 'b',
+            q_a1_2: 'a',
+            q_a2_1: 'a',
+            q_a2_2: 'a',
+            q_b1_1: 'a',
+            q_b1_2: 'b',
+            q_b2_1: 'a',
+            q_b2_2: 'a',
+            q_c1_1: 'a',
+            q_c1_2: 'a'
+        };
 
-        for (let key in answers) {
-            let selected = document.querySelector(`input[name="${key}"]:checked`);
-            if (selected && selected.value === answers[key]) {
-                totalScore += 33; 
+        let correctCount = 0;
+        const totalQuestions = Object.keys(answerKey).length;
+
+        for (const qName in answerKey) {
+            const checked = document.querySelector(`input[name="${qName}"]:checked`);
+            if (checked && checked.value === answerKey[qName]) {
+                correctCount++;
             }
         }
 
-        let level = "Pending Review";
+        const totalScore = Math.round((correctCount / totalQuestions) * 100);
+        const determinedLevel = calculateLevel(correctCount, totalQuestions);
 
-        google.script.run
-            .withSuccessHandler(function() {
-                document.getElementById('test-form').classList.remove('active');
-                document.getElementById('result-screen').classList.add('active');
-            })
-            .submitTest({ 
-                name: name, 
-                email: email, 
-                totalScore: totalScore, 
-                level: level,
-                writingAnswer: writingAnswer,
-                audioRecorded: audioRecordedFlag
-            });
+        const payload = {
+            name: name,
+            email: email,
+            correctCount: correctCount,
+            totalQuestions: totalQuestions,
+            totalScore: totalScore,
+            level: determinedLevel,
+            writingAnswer: writingAnswer,
+            audioRecorded: audioRecordedFlag
+        };
+
+        if (APPS_SCRIPT_WEB_APP_URL) {
+            fetch(APPS_SCRIPT_WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        }
+
+        document.getElementById('test-form').classList.remove('active');
+        document.getElementById('result-screen').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
 
