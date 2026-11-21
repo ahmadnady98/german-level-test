@@ -135,7 +135,7 @@
 
         .checkbox-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 10px;
             margin-top: 8px;
         }
@@ -156,6 +156,7 @@
             width: 17px;
             height: 17px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .section-badge {
@@ -341,18 +342,17 @@
             <h2>A1 Abschluss-Test</h2>
         </div>
 
-        <!-- 1. HÖREN: Beim Arzt -->
+        <!-- 1. HÖREN: Beim Arzt (كل النقاط 1، 2، 3 اختيارات متعددة) -->
         <div class="section-badge" style="margin-top: 0;">Hören – Beim Arzt</div>
         <div class="question-card audio-card">
-            <div class="q-title">Hören Sie ein Gespräch beim Arzt. Was ist richtig? Wählen Sie aus.</div>
+            <div class="q-title">Hören Sie ein Gespräch beim Arzt. Was ist richtig? Kreuzen Sie an (Mehrfachauswahl möglich).</div>
             <audio controls preload="auto">
                 <source src="Beim_Arzt.mp3" type="audio/mpeg">
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
-            <!-- السؤال الأول في السماع: اختيار متعدد (أكثر من إجابة صحيحة ممكنة) -->
             <div class="form-group">
-                <span class="field-label">1. Herr Zimmermann hat ... (Mehrfachauswahl möglich)</span>
+                <span class="field-label">1. Herr Zimmermann hat ...</span>
                 <div class="checkbox-grid">
                     <label class="checkbox-option">
                         <input type="checkbox" name="h1_q1" value="Halsschmerzen">
@@ -382,26 +382,51 @@
             </div>
 
             <div class="form-group">
-                <label class="field-label" for="h1_q2">2. Der Arzt sagt, das ist ...</label>
-                <select id="h1_q2">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="eine schwere Grippe">eine schwere Grippe</option>
-                    <option value="eine normale Erkältung">eine normale Erkältung</option>
-                    <option value="ein Problem mit dem Hals">ein Problem mit dem Hals</option>
-                </select>
+                <span class="field-label">2. Der Arzt sagt, das ist ...</span>
+                <div class="checkbox-grid">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q2" value="eine schwere Grippe">
+                        <span>eine schwere Grippe</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q2" value="eine normale Erkältung">
+                        <span>eine normale Erkältung</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q2" value="ein Problem mit dem Hals">
+                        <span>ein Problem mit dem Hals</span>
+                    </label>
+                </div>
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
-                <label class="field-label" for="h1_q3">3. Herr Zimmermann soll ...</label>
-                <select id="h1_q3">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="eine Woche zu Hause bleiben">eine Woche zu Hause bleiben</option>
-                    <option value="Obst und Gemüse essen">Obst und Gemüse essen</option>
-                    <option value="viel Alkohol trinken">viel Alkohol trinken</option>
-                    <option value="viel schlafen">viel schlafen</option>
-                    <option value="ins Fitnessstudio gehen">ins Fitnessstudio gehen</option>
-                    <option value="spazieren gehen">spazieren gehen</option>
-                </select>
+                <span class="field-label">3. Herr Zimmermann soll ...</span>
+                <div class="checkbox-grid">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="eine Woche zu Hause bleiben">
+                        <span>eine Woche zu Hause bleiben</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="Obst und Gemüse essen">
+                        <span>Obst und Gemüse essen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="viel Alkohol trinken">
+                        <span>viel Alkohol trinken</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="viel schlafen">
+                        <span>viel schlafen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="ins Fitnessstudio gehen">
+                        <span>ins Fitnessstudio gehen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q3" value="spazieren gehen">
+                        <span>spazieren gehen</span>
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -950,23 +975,37 @@
         }
     }
 
+    function getCheckedValues(name) {
+        return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+            .map((el) => el.value);
+    }
+
+    function isExactSetMatch(selected, expected) {
+        return (
+            selected.length === expected.length &&
+            expected.every((item) => selected.includes(item))
+        );
+    }
+
     function submitExam() {
         const name = document.getElementById("studentName").value.trim();
         const email = document.getElementById("studentEmail").value.trim();
 
-        // التقاط اختيارات السؤال الأول في السماع (اختيار متعدد)
-        const selectedSymptoms = Array.from(document.querySelectorAll('input[name="h1_q1"]:checked'))
-            .map((el) => el.value);
+        // نقاط السماع الأول (Beim Arzt) - جميعها اختيارات متعددة
+        const h1Q1Selected = getCheckedValues("h1_q1");
+        const h1Q2Selected = getCheckedValues("h1_q2");
+        const h1Q3Selected = getCheckedValues("h1_q3");
 
-        // الإجابات الصحيحة للسؤال الأول في السماع (Husten, Schnupfen, Fieber)
-        const expectedSymptoms = ["Husten", "Schnupfen", "Fieber"];
-        const isH1Q1Correct =
-            selectedSymptoms.length === expectedSymptoms.length &&
-            expectedSymptoms.every((item) => selectedSymptoms.includes(item));
+        const h1Q1Expected = ["Husten", "Schnupfen", "Fieber"];
+        const h1Q2Expected = ["eine normale Erkältung"];
+        const h1Q3Expected = ["eine Woche zu Hause bleiben", "viel schlafen", "spazieren gehen"];
+
+        let score = 0;
+        if (isExactSetMatch(h1Q1Selected, h1Q1Expected)) score++;
+        if (isExactSetMatch(h1Q2Selected, h1Q2Expected)) score++;
+        if (isExactSetMatch(h1Q3Selected, h1Q3Expected)) score++;
 
         const dropdownAnswers = {
-            h1_q2: "eine normale Erkältung",
-            h1_q3: "eine Woche zu Hause bleiben",
             h2_q1: "Garten",
             h2_q2: "Freizeitaktivitäten",
             h2_q3: "Spaziergang",
@@ -986,10 +1025,11 @@
             s_q7: "Mit freundlichen"
         };
 
-        let score = isH1Q1Correct ? 1 : 0;
-        const totalDropdown = Object.keys(dropdownAnswers).length + 1;
+        const totalDropdown = Object.keys(dropdownAnswers).length + 3;
         const responses = {
-            h1_q1: selectedSymptoms
+            h1_q1: h1Q1Selected,
+            h1_q2: h1Q2Selected,
+            h1_q3: h1Q3Selected
         };
 
         for (const key in dropdownAnswers) {
