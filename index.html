@@ -8,8 +8,7 @@
         :root {
             --primary: #1e293b;
             --accent: #dc2626;
-            --gold: #eab308;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.93);
             --box-bg: rgba(248, 250, 252, 0.96);
             --border: #cbd5e1;
             --text: #0f172a;
@@ -29,27 +28,43 @@
             background-color: #f8fafc;
         }
 
-        /* خلفية اللوجو المتكررة والهادئة في كامل الصفحة */
+        /* صورة لوجو واحدة كبيرة وواضحة في الخلفية */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             background-image: url("logo.png");
-            background-repeat: repeat;
-            background-size: 240px auto;
-            opacity: 0.08;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: min(72vw, 680px) auto;
+            opacity: 0.16;
             pointer-events: none;
             z-index: -1;
         }
 
         .container {
-            max-width: 860px;
+            max-width: 880px;
             margin: 0 auto;
             background: var(--card-bg);
-            backdrop-filter: blur(4px);
-            padding: 36px;
+            padding: 34px;
             border-radius: 16px;
             box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .top-contact-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            background: #f1f5f9;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
             border: 1px solid #e2e8f0;
         }
 
@@ -60,12 +75,14 @@
             border-bottom: 2px solid #e2e8f0;
         }
 
-        .brand-logo-img {
-            max-width: 240px;
-            height: auto;
+        /* اللوجو بعرض الورقة من فوق */
+        .brand-logo-banner {
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
             display: block;
-            margin: 0 auto 12px auto;
-            border-radius: 8px;
+            margin: 0 auto 14px auto;
+            border-radius: 10px;
         }
 
         h1, h2, h3 {
@@ -93,7 +110,7 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px 14px;
+            padding: 11px 14px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 15px;
@@ -112,7 +129,7 @@
         }
 
         textarea {
-            min-height: 120px;
+            min-height: 140px;
             resize: vertical;
         }
 
@@ -138,18 +155,18 @@
 
         .audio-card {
             border-left-color: #15803d;
-            background: #f0fdf4;
+            background: rgba(240, 253, 244, 0.96);
         }
 
         .q-title {
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 15.5px;
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         .reading-box {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.97);
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             padding: 18px;
@@ -163,14 +180,22 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 8px;
-            line-height: 1.8;
+            line-height: 1.9;
             font-size: 15px;
         }
 
         .inline-sentence select {
             width: auto;
-            min-width: 170px;
+            min-width: 160px;
             padding: 8px 12px;
+        }
+
+        .inline-sentence input[type="text"].perfekt-input {
+            width: auto;
+            min-width: 150px;
+            max-width: 210px;
+            padding: 7px 10px;
+            margin: 0;
         }
 
         audio {
@@ -234,10 +259,16 @@
 <body>
 
 <div class="container">
-    <!-- الصفحة الأولى: بالألمانية فقط مع اللوجو -->
+    <!-- رقم التليفون في أعلى الورقة -->
+    <div class="top-contact-bar">
+        <span>German Capsules – Herr Ahmed Nady</span>
+        <span>Tel: 01003248685</span>
+    </div>
+
+    <!-- الصفحة الأولى: بالألمانية فقط مع اللوجو بعرض الورقة -->
     <div id="step-intro" class="step active">
         <div class="brand-header">
-            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-banner">
             <h2>German Capsules – Herr Ahmed Nady</h2>
             <h3>A1 Abschluss-Test</h3>
         </div>
@@ -258,7 +289,7 @@
     <!-- الصفحة الثانية: أسئلة الامتحان -->
     <div id="step-exam" class="step">
         <div class="brand-header">
-            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img" style="max-width: 150px;">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-banner">
             <h2>A1 Abschluss-Test</h2>
         </div>
 
@@ -266,9 +297,8 @@
         <div class="section-badge" style="margin-top: 0;">Hören – Beim Arzt</div>
         <div class="question-card audio-card">
             <div class="q-title">Hören Sie ein Gespräch beim Arzt. Was ist richtig? Wählen Sie aus.</div>
-            <!-- ضع رابط الملف الصوتي الأول هنا بدل AUDIO_1_URL -->
             <audio controls preload="auto">
-                <source src="AUDIO_1_URL" type="audio/mpeg">
+                <source src="Beim_Arzt.mp3" type="audio/mpeg">
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
@@ -313,9 +343,8 @@
         <div class="section-badge">Hören – Freizeittrends</div>
         <div class="question-card audio-card">
             <div class="q-title">Hören Sie den Bericht und ergänzen Sie die fehlenden Nomen.</div>
-            <!-- ضع رابط الملف الصوتي الثاني هنا بدل AUDIO_2_URL -->
             <audio controls preload="auto">
-                <source src="AUDIO_2_URL" type="audio/mpeg">
+                <source src="Freizeittrends.mp3" type="audio/mpeg">
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
@@ -508,59 +537,47 @@
             </div>
         </div>
 
-        <!-- 3. GRAMMATIK: Was hat Marc in Berlin gemacht? -->
+        <!-- 3. GRAMMATIK: Was hat Marc in Berlin gemacht? (Perfekt: Hilfsverb + Partizip II) -->
         <div class="section-badge">Grammatik – Was hat Marc in Berlin gemacht?</div>
         <div class="question-card">
-            <div class="q-title">Ergänzen Sie die Verben in der richtigen Form.</div>
+            <div class="q-title">Bilden Sie Sätze im Perfekt! Schreiben Sie in das erste Feld das Hilfsverb (hat / ist) und in das zweite Feld das Partizip II.</div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>1. (sehen) Er</span>
-                    <select id="g_q1">
-                        <option value="">-- wählen --</option>
-                        <option value="hat gesehen">hat gesehen</option>
-                        <option value="ist gesehen">ist gesehen</option>
-                        <option value="sah">sah</option>
-                    </select>
-                    <span>unter anderem historische Züge und Flugzeuge.</span>
+                    <input type="text" id="g1_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>unter anderem historische Züge und Flugzeuge</span>
+                    <input type="text" id="g1_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>2. (experimentieren) Er</span>
-                    <select id="g_q2">
-                        <option value="">-- wählen --</option>
-                        <option value="hat experimentiert">hat experimentiert</option>
-                        <option value="ist experimentiert">ist experimentiert</option>
-                        <option value="experimentierte">experimentierte</option>
-                    </select>
-                    <span>im Science Center Spectrum auch.</span>
+                    <input type="text" id="g2_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>im Science Center Spectrum auch</span>
+                    <input type="text" id="g2_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>3. (aufstehen) Heute</span>
-                    <select id="g_q3">
-                        <option value="">-- wählen --</option>
-                        <option value="ist er aufgestanden">ist er aufgestanden</option>
-                        <option value="hat er aufgestanden">hat er aufgestanden</option>
-                        <option value="stand er auf">stand er auf</option>
-                    </select>
-                    <span>gegen 9.30 Uhr.</span>
+                    <input type="text" id="g3_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er gegen 9.30 Uhr</span>
+                    <input type="text" id="g3_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>4. (aussteigen) Danach hat er die Buslinie 100 genommen. Beim Brandenburger Tor</span>
-                    <select id="g_q4">
-                        <option value="">-- wählen --</option>
-                        <option value="ist er ausgestiegen">ist er ausgestiegen</option>
-                        <option value="hat er ausgestiegen">hat er ausgestiegen</option>
-                        <option value="stieg er aus">stieg er aus</option>
-                    </select>
+                    <input type="text" id="g4_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er</span>
+                    <input type="text" id="g4_part" class="perfekt-input" placeholder="Partizip II">
                     <span>.</span>
                 </div>
             </div>
@@ -568,83 +585,69 @@
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>5. (fotografieren) Er</span>
-                    <select id="g_q5">
-                        <option value="">-- wählen --</option>
-                        <option value="hat fotografiert">hat fotografiert</option>
-                        <option value="ist fotografiert">ist fotografiert</option>
-                        <option value="fotografierte">fotografierte</option>
-                    </select>
-                    <span>den Pariser Platz, das Hotel Adlon und andere Sehenswürdigkeiten.</span>
+                    <input type="text" id="g5_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>den Pariser Platz, das Hotel Adlon und andere Sehenswürdigkeiten</span>
+                    <input type="text" id="g5_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>6. (besichtigen) Dann</span>
-                    <select id="g_q6">
-                        <option value="">-- wählen --</option>
-                        <option value="hat er besichtigt">hat er besichtigt</option>
-                        <option value="ist er besichtigt">ist er besichtigt</option>
-                        <option value="besichtigte er">besichtigte er</option>
-                    </select>
-                    <span>den Reichstag.</span>
+                    <input type="text" id="g6_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er den Reichstag</span>
+                    <input type="text" id="g6_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>7. (essen, trinken) Er</span>
-                    <select id="g_q7">
-                        <option value="">-- wählen --</option>
-                        <option value="hat ... gegessen ... und ... getrunken">hat ... gegessen ... und ... getrunken</option>
-                        <option value="ist ... gegessen ... und ... getrunken">ist ... gegessen ... und ... getrunken</option>
-                        <option value="aß ... und trank">aß ... und trank</option>
-                    </select>
-                    <span>in einem schönen Café ein Brötchen und einen Tee.</span>
+                    <input type="text" id="g7_aux1" class="perfekt-input" placeholder="Hilfsverb 1">
+                    <span>in einem schönen Café ein Brötchen</span>
+                    <input type="text" id="g7_part1" class="perfekt-input" placeholder="Partizip II (essen)">
+                    <span>und</span>
+                    <input type="text" id="g7_aux2" class="perfekt-input" placeholder="Hilfsverb 2">
+                    <span>einen Tee</span>
+                    <input type="text" id="g7_part2" class="perfekt-input" placeholder="Partizip II (trinken)">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>8. (fahren) Am Nachmittag</span>
-                    <select id="g_q8">
-                        <option value="">-- wählen --</option>
-                        <option value="ist er gefahren">ist er gefahren</option>
-                        <option value="hat er gefahren">hat er gefahren</option>
-                        <option value="fuhr er">fuhr er</option>
-                    </select>
-                    <span>zur East-Side-Gallery.</span>
+                    <input type="text" id="g8_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er zur East-Side-Gallery</span>
+                    <input type="text" id="g8_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="inline-sentence">
                     <span>9. (machen) Dort</span>
-                    <select id="g_q9">
-                        <option value="">-- wählen --</option>
-                        <option value="hat er gemacht">hat er gemacht</option>
-                        <option value="ist er gemacht">ist er gemacht</option>
-                        <option value="machte er">machte er</option>
-                    </select>
-                    <span>auch viele Fotos.</span>
+                    <input type="text" id="g9_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er auch viele Fotos</span>
+                    <input type="text" id="g9_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
                 <div class="inline-sentence">
                     <span>10. (gehen) Am Abend</span>
-                    <select id="g_q10">
-                        <option value="">-- wählen --</option>
-                        <option value="ist er gegangen">ist er gegangen</option>
-                        <option value="hat er gegangen">hat er gegangen</option>
-                        <option value="ging er">ging er</option>
-                    </select>
-                    <span>mit Alexandra in ein Restaurant.</span>
+                    <input type="text" id="g10_aux" class="perfekt-input" placeholder="Hilfsverb">
+                    <span>er mit Alexandra in ein Restaurant</span>
+                    <input type="text" id="g10_part" class="perfekt-input" placeholder="Partizip II">
+                    <span>.</span>
                 </div>
             </div>
         </div>
 
-        <!-- 4. LESEN: Studentenalltag -->
+        <!-- 4. LESEN: Studentenalltag (إجابة كتابية لكل سؤال) -->
         <div class="section-badge">Lesen – Studentenalltag</div>
         <div class="reading-box">
             <p><strong>Studentenalltag</strong></p>
@@ -657,93 +660,53 @@
         </div>
 
         <div class="question-card">
-            <div class="q-title">Lesen Sie den Text und wählen Sie die korrekten Antworten.</div>
+            <div class="q-title">Lesen Sie den Text und schreiben Sie Ihre Antworten.</div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q1">1. Woher kommt Balkia?</label>
-                <select id="l_q1">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="aus Kasachstan">aus Kasachstan</option>
-                    <option value="aus Köln">aus Köln</option>
-                    <option value="keine Information im Text">keine Information im Text</option>
-                </select>
+                <input type="text" id="l_q1" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q2">2. Wie viele Personen sind in Balkias Gruppe?</label>
-                <select id="l_q2">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="siebzehn">siebzehn</option>
-                    <option value="acht">acht</option>
-                    <option value="zehn">zehn</option>
-                </select>
+                <input type="text" id="l_q2" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q3">3. Warum ist Balkia zu spät zum Unterricht gekommen?</label>
-                <select id="l_q3">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="Der Bus hat sich verspätet.">Der Bus hat sich verspätet.</option>
-                    <option value="Balkia hatte keine Uhr.">Balkia hatte keine Uhr.</option>
-                    <option value="Balkia hat verschlafen.">Balkia hat verschlafen.</option>
-                </select>
+                <input type="text" id="l_q3" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q4">4. Wie viele Studenten haben das Diktat fehlerfrei geschrieben?</label>
-                <select id="l_q4">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="alle">alle</option>
-                    <option value="zwei">zwei</option>
-                    <option value="vier">vier</option>
-                </select>
+                <input type="text" id="l_q4" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q5">5. Wohin ist Balkia nach dem Unterricht gegangen?</label>
-                <select id="l_q5">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="in die Mensa">in die Mensa</option>
-                    <option value="in den Park">in den Park</option>
-                    <option value="ins Kino">ins Kino</option>
-                </select>
+                <input type="text" id="l_q5" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q6">6. Was hat sie gegessen?</label>
-                <select id="l_q6">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="Suppe">Suppe</option>
-                    <option value="Geflügel">Geflügel</option>
-                    <option value="Gulasch">Gulasch</option>
-                </select>
+                <input type="text" id="l_q6" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group">
                 <label class="field-label" for="l_q7">7. Was hat Balkia zu Hause gemacht?</label>
-                <select id="l_q7">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="Sie hat Vokabeln gelernt.">Sie hat Vokabeln gelernt.</option>
-                    <option value="Sie hat einen Brief geschrieben.">Sie hat einen Brief geschrieben.</option>
-                    <option value="Sie hat ein Buch gelesen.">Sie hat ein Buch gelesen.</option>
-                </select>
+                <input type="text" id="l_q7" placeholder="Ihre Antwort...">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
                 <label class="field-label" for="l_q8">8. Wie heißt der Freund von Balkia?</label>
-                <select id="l_q8">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="Alexander">Alexander</option>
-                    <option value="Michael">Michael</option>
-                    <option value="Karaganda">Karaganda</option>
-                </select>
+                <input type="text" id="l_q8" placeholder="Ihre Antwort...">
             </div>
         </div>
 
         <!-- 5. SCHREIBEN -->
         <div class="section-badge">Schreiben</div>
         <div class="question-card">
-            <div class="q-title">Ergänzen Sie die E-Mail und schreiben Sie am Ende Ihren eigenen Text / Ihre Antwort:</div>
+            <div class="q-title">Ergänzen Sie die E-Mail:</div>
 
             <div class="form-group">
                 <div class="inline-sentence">
@@ -816,8 +779,10 @@
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
-                <label class="field-label" for="freeWriting">Zusätzlicher Schreibteil (Schreiben Sie hier Ihren Text):</label>
-                <textarea id="freeWriting" placeholder="Schreiben Sie hier auf Deutsch..."></textarea>
+                <label class="field-label" for="freeWriting">
+                    Zusätzlicher Schreibteil: Schreiben Sie eine E-Mail an Ihren Freund / Ihre Freundin. Entschuldigen Sie sich und schreiben Sie, dass Sie nicht zur Party kommen können, weil Sie wegen des Verkehrs / Staus zu spät sind.
+                </label>
+                <textarea id="freeWriting" placeholder="Liebe/r ..., ich entschuldige mich, aber ich kann leider nicht zur Party kommen, weil ..."></textarea>
             </div>
         </div>
 
@@ -836,7 +801,7 @@
     <!-- الصفحة الثالثة: رسالة إنهاء فقط بدون إظهار النتيجة أو المستوى للطالب -->
     <div id="step-done" class="step">
         <div class="brand-header">
-            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img" style="max-width: 160px;">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-banner">
             <h2>German Capsules – Herr Ahmed Nady</h2>
         </div>
         <div class="thank-you-box">
@@ -847,7 +812,7 @@
 </div>
 
 <script>
-    // ضع هنا رابط الـ Web App الخاص بـ Google Apps Script لإرسال النتيجة إلى بريدك الإلكتروني
+    // ضع هنا رابط الـ Web App الخاص بـ Google Apps Script إذا أردت إرسال النتيجة تلقائياً لبريدك
     const APPS_SCRIPT_URL = "";
 
     let mediaRecorder = null;
@@ -917,7 +882,7 @@
         const name = document.getElementById("studentName").value.trim();
         const email = document.getElementById("studentEmail").value.trim();
 
-        const correctAnswers = {
+        const dropdownAnswers = {
             h1_q1: "Husten",
             h1_q2: "eine normale Erkältung",
             h1_q3: "eine Woche zu Hause bleiben",
@@ -931,24 +896,6 @@
             h2_q8: "Sportarten",
             h2_q9: "Fußball",
             h2_q10: "Zeit",
-            g_q1: "hat gesehen",
-            g_q2: "hat experimentiert",
-            g_q3: "ist er aufgestanden",
-            g_q4: "ist er ausgestiegen",
-            g_q5: "hat fotografiert",
-            g_q6: "hat er besichtigt",
-            g_q7: "hat ... gegessen ... und ... getrunken",
-            g_q8: "ist er gefahren",
-            g_q9: "hat er gemacht",
-            g_q10: "ist er gegangen",
-            l_q1: "aus Kasachstan",
-            l_q2: "siebzehn",
-            l_q3: "Balkia hat verschlafen.",
-            l_q4: "zwei",
-            l_q5: "in die Mensa",
-            l_q6: "Geflügel",
-            l_q7: "Sie hat einen Brief geschrieben.",
-            l_q8: "Michael",
             s_q1: "Sehr geehrte",
             s_q2: "brauche",
             s_q3: "schicken",
@@ -959,25 +906,46 @@
         };
 
         let score = 0;
-        const total = Object.keys(correctAnswers).length;
+        const totalDropdown = Object.keys(dropdownAnswers).length;
         const responses = {};
 
-        for (const key in correctAnswers) {
+        for (const key in dropdownAnswers) {
             const val = document.getElementById(key).value;
             responses[key] = val;
-            if (val === correctAnswers[key]) {
+            if (val === dropdownAnswers[key]) {
                 score++;
             }
         }
+
+        const perfektInputs = [
+            "g1_aux", "g1_part",
+            "g2_aux", "g2_part",
+            "g3_aux", "g3_part",
+            "g4_aux", "g4_part",
+            "g5_aux", "g5_part",
+            "g6_aux", "g6_part",
+            "g7_aux1", "g7_part1", "g7_aux2", "g7_part2",
+            "g8_aux", "g8_part",
+            "g9_aux", "g9_part",
+            "g10_aux", "g10_part"
+        ];
+
+        perfektInputs.forEach((id) => {
+            responses[id] = document.getElementById(id).value.trim();
+        });
+
+        const lesenInputs = ["l_q1", "l_q2", "l_q3", "l_q4", "l_q5", "l_q6", "l_q7", "l_q8"];
+        lesenInputs.forEach((id) => {
+            responses[id] = document.getElementById(id).value.trim();
+        });
 
         const freeWriting = document.getElementById("freeWriting").value.trim();
 
         const payload = {
             name: name,
             email: email,
-            score: score,
-            total: total,
-            percentage: Math.round((score / total) * 100),
+            dropdownScore: score,
+            totalDropdown: totalDropdown,
             responses: responses,
             freeWriting: freeWriting,
             hasRecordedAudio: hasRecordedAudio
