@@ -342,7 +342,7 @@
             <h2>A1 Abschluss-Test</h2>
         </div>
 
-        <!-- 1. HÖREN: Beim Arzt (كل النقاط 1، 2، 3 اختيارات متعددة) -->
+        <!-- 1. HÖREN: Beim Arzt -->
         <div class="section-badge" style="margin-top: 0;">Hören – Beim Arzt</div>
         <div class="question-card audio-card">
             <div class="q-title">Hören Sie ein Gespräch beim Arzt. Was ist richtig? Kreuzen Sie an (Mehrfachauswahl möglich).</div>
@@ -628,7 +628,7 @@
             </div>
         </div>
 
-        <!-- 3. GRAMMATIK: Was hat Marc in Berlin gemacht? (Perfekt: Hilfsverb + Partizip II) -->
+        <!-- 3. GRAMMATIK: Was hat Marc in Berlin gemacht? -->
         <div class="section-badge">Grammatik – Was hat Marc in Berlin gemacht?</div>
         <div class="question-card">
             <div class="q-title">Bilden Sie Sätze im Perfekt! Schreiben Sie in das erste Feld das Hilfsverb (hat / ist) und in das zweite Feld das Partizip II.</div>
@@ -909,8 +909,7 @@
 </div>
 
 <script>
-    // ضع هنا رابط الـ Web App الخاص بـ Google Apps Script إذا أردت إرسال النتيجة تلقائياً لبريدك
-    const APPS_SCRIPT_URL = "";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx81GhkQw8p10GbQgk88CO7iZP-7VyJKReeIXGyikhT8kazYUBDM1F9ltbJ0wIs0l7o/exec";
 
     let mediaRecorder = null;
     let audioChunks = [];
@@ -991,7 +990,6 @@
         const name = document.getElementById("studentName").value.trim();
         const email = document.getElementById("studentEmail").value.trim();
 
-        // نقاط السماع الأول (Beim Arzt) - جميعها اختيارات متعددة
         const h1Q1Selected = getCheckedValues("h1_q1");
         const h1Q2Selected = getCheckedValues("h1_q2");
         const h1Q3Selected = getCheckedValues("h1_q3");
@@ -1069,6 +1067,7 @@
             email: email,
             dropdownScore: score,
             totalDropdown: totalDropdown,
+            percentage: Math.round((score / totalDropdown) * 100),
             responses: responses,
             freeWriting: freeWriting,
             hasRecordedAudio: hasRecordedAudio
