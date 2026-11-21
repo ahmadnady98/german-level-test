@@ -133,6 +133,31 @@
             resize: vertical;
         }
 
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+        }
+
         .section-badge {
             display: inline-block;
             background: var(--primary);
@@ -203,6 +228,29 @@
             margin: 10px 0 14px 0;
         }
 
+        .exam-footer-note {
+            margin-top: 28px;
+            padding: 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 1.75;
+        }
+
+        .exam-footer-note .viel-erfolg {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .exam-footer-note .teacher-info {
+            font-size: 15px;
+            font-weight: 600;
+            color: #334155;
+        }
+
         .btn {
             display: block;
             width: 100%;
@@ -259,10 +307,10 @@
 <body>
 
 <div class="container">
-    <!-- رقم التليفون في أعلى الورقة -->
+    <!-- رقم الواتساب في أعلى الورقة -->
     <div class="top-contact-bar">
         <span>German Capsules – Herr Ahmed Nady</span>
-        <span>Tel: 01003248685</span>
+        <span>📱 WhatsApp: 01003248685</span>
     </div>
 
     <!-- الصفحة الأولى: بالألمانية فقط مع اللوجو بعرض الورقة -->
@@ -302,17 +350,35 @@
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
+            <!-- السؤال الأول في السماع: اختيار متعدد (أكثر من إجابة صحيحة ممكنة) -->
             <div class="form-group">
-                <label class="field-label" for="h1_q1">1. Herr Zimmermann hat ...</label>
-                <select id="h1_q1">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="Halsschmerzen">Halsschmerzen</option>
-                    <option value="Rückenschmerzen">Rückenschmerzen</option>
-                    <option value="Husten">Husten</option>
-                    <option value="Ohrenschmerzen">Ohrenschmerzen</option>
-                    <option value="Schnupfen">Schnupfen</option>
-                    <option value="Fieber">Fieber</option>
-                </select>
+                <span class="field-label">1. Herr Zimmermann hat ... (Mehrfachauswahl möglich)</span>
+                <div class="checkbox-grid">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Halsschmerzen">
+                        <span>Halsschmerzen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Rückenschmerzen">
+                        <span>Rückenschmerzen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Husten">
+                        <span>Husten</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Ohrenschmerzen">
+                        <span>Ohrenschmerzen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Schnupfen">
+                        <span>Schnupfen</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="h1_q1" value="Fieber">
+                        <span>Fieber</span>
+                    </label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -647,7 +713,7 @@
             </div>
         </div>
 
-        <!-- 4. LESEN: Studentenalltag (إجابة كتابية لكل سؤال) -->
+        <!-- 4. LESEN: Studentenalltag -->
         <div class="section-badge">Lesen – Studentenalltag</div>
         <div class="reading-box">
             <p><strong>Studentenalltag</strong></p>
@@ -780,9 +846,9 @@
 
             <div class="form-group" style="margin-bottom: 0;">
                 <label class="field-label" for="freeWriting">
-                    Zusätzlicher Schreibteil: Schreiben Sie eine E-Mail an Ihren Freund / Ihre Freundin. Entschuldigen Sie sich und schreiben Sie, dass Sie nicht zur Party kommen können, weil Sie wegen des Verkehrs / Staus zu spät sind.
+                    Zusätzlicher Schreibteil: Schreiben Sie eine E-Mail an Ihren Freund Ali. Entschuldigen Sie sich und schreiben Sie, dass Sie nicht zur Party kommen können, denn Sie sind wegen des Verkehrs / Staus zu spät.
                 </label>
-                <textarea id="freeWriting" placeholder="Liebe/r ..., ich entschuldige mich, aber ich kann leider nicht zur Party kommen, weil ..."></textarea>
+                <textarea id="freeWriting" placeholder="Lieber Ali, ich entschuldige mich, aber ich kann leider nicht zur Party kommen, denn ..."></textarea>
             </div>
         </div>
 
@@ -793,6 +859,12 @@
             <button type="button" id="recordBtn" class="btn btn-record" onclick="toggleRecording()">Aufnahme starten</button>
             <div id="recordStatus" class="record-status">Keine Aufnahme gestartet.</div>
             <audio id="recordedAudio" controls style="display: none; margin-top: 12px;"></audio>
+        </div>
+
+        <!-- ختام الامتحان قبل زر الإرسال -->
+        <div class="exam-footer-note">
+            <div class="viel-erfolg">Viel Erfolg</div>
+            <div class="teacher-info">Herr Ahmed Nady | 📱 WhatsApp: 01003248685</div>
         </div>
 
         <button type="button" class="btn" onclick="submitExam()">Test absenden</button>
@@ -882,8 +954,17 @@
         const name = document.getElementById("studentName").value.trim();
         const email = document.getElementById("studentEmail").value.trim();
 
+        // التقاط اختيارات السؤال الأول في السماع (اختيار متعدد)
+        const selectedSymptoms = Array.from(document.querySelectorAll('input[name="h1_q1"]:checked'))
+            .map((el) => el.value);
+
+        // الإجابات الصحيحة للسؤال الأول في السماع (Husten, Schnupfen, Fieber)
+        const expectedSymptoms = ["Husten", "Schnupfen", "Fieber"];
+        const isH1Q1Correct =
+            selectedSymptoms.length === expectedSymptoms.length &&
+            expectedSymptoms.every((item) => selectedSymptoms.includes(item));
+
         const dropdownAnswers = {
-            h1_q1: "Husten",
             h1_q2: "eine normale Erkältung",
             h1_q3: "eine Woche zu Hause bleiben",
             h2_q1: "Garten",
@@ -905,9 +986,11 @@
             s_q7: "Mit freundlichen"
         };
 
-        let score = 0;
-        const totalDropdown = Object.keys(dropdownAnswers).length;
-        const responses = {};
+        let score = isH1Q1Correct ? 1 : 0;
+        const totalDropdown = Object.keys(dropdownAnswers).length + 1;
+        const responses = {
+            h1_q1: selectedSymptoms
+        };
 
         for (const key in dropdownAnswers) {
             const val = document.getElementById(key).value;
