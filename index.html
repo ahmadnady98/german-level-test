@@ -1,432 +1,990 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="de" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deutscher Einstufungstest (A1 – C1)</title>
+    <title>A1 Abschluss-Test – German Capsules</title>
     <style>
+        :root {
+            --primary: #1e293b;
+            --accent: #dc2626;
+            --gold: #eab308;
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --box-bg: rgba(248, 250, 252, 0.96);
+            --border: #cbd5e1;
+            --text: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f1f5f9;
             margin: 0;
-            padding: 20px;
-            direction: rtl;
-            color: #1e293b;
+            padding: 25px 15px;
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+            background-color: #f8fafc;
         }
+
+        /* خلفية اللوجو المتكررة والهادئة في كامل الصفحة */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url("logo.png");
+            background-repeat: repeat;
+            background-size: 240px auto;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .container {
-            max-width: 820px;
-            background: #fff;
-            margin: auto;
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
             padding: 36px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+            border: 1px solid #e2e8f0;
         }
-        h2, h3 {
-            color: #0f172a;
+
+        .brand-header {
             text-align: center;
-            margin-top: 0;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid #e2e8f0;
         }
-        .subtitle {
+
+        .brand-logo-img {
+            max-width: 240px;
+            height: auto;
+            display: block;
+            margin: 0 auto 12px auto;
+            border-radius: 8px;
+        }
+
+        h1, h2, h3 {
+            margin: 8px 0;
+            color: var(--primary);
             text-align: center;
-            color: #64748b;
-            margin-bottom: 25px;
         }
+
         .step { display: none; }
         .step.active { display: block; }
-        .btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 14px 26px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 22px;
-            width: 100%;
-            transition: background 0.25s;
+
+        .form-group {
+            margin-bottom: 18px;
         }
-        .btn:hover { background: #1d4ed8; }
-        .btn-record {
-            background: #dc2626;
-            width: auto;
-            padding: 10px 20px;
-            margin-top: 10px;
-            font-size: 14px;
+
+        label.field-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
         }
-        .btn-record.recording {
-            background: #059669;
-            animation: pulse 1.4s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.55; }
-            100% { opacity: 1; }
-        }
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            padding: 13px;
-            margin: 8px 0 18px 0;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
         textarea {
-            height: 130px;
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            background: #ffffff;
+            color: var(--text);
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
             resize: vertical;
         }
-        .question-box {
-            margin-bottom: 20px;
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 10px;
-            border-right: 5px solid #2563eb;
-        }
-        .audio-box {
-            background: #f0fdf4;
-            border-right-color: #16a34a;
-        }
-        .germ-title {
-            font-weight: bold;
-            color: #0f172a;
-            margin-bottom: 10px;
-            display: block;
-            font-size: 16px;
-            direction: ltr;
-            text-align: left;
-        }
-        .sub-q {
-            font-weight: bold;
-            color: #1e293b;
-            margin: 14px 0 6px 0;
-            direction: ltr;
-            text-align: left;
-        }
-        .options-ltr label {
-            direction: ltr;
-            text-align: left;
-        }
-        audio {
-            width: 100%;
-            margin: 10px 0;
-        }
-        label {
-            display: block;
-            margin: 8px 0;
-            cursor: pointer;
-            font-size: 15px;
-        }
-        .level-badge {
+
+        .section-badge {
             display: inline-block;
-            background: #e0f2fe;
-            color: #0369a1;
+            background: var(--primary);
+            color: #ffffff;
             padding: 6px 16px;
             border-radius: 20px;
-            font-weight: bold;
-            margin: 22px 0 14px 0;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 26px 0 14px 0;
+        }
+
+        .question-card {
+            background: var(--box-bg);
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--primary);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .audio-card {
+            border-left-color: #15803d;
+            background: #f0fdf4;
+        }
+
+        .q-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 15.5px;
+            line-height: 1.5;
+        }
+
+        .reading-box {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+            line-height: 1.75;
             font-size: 15px;
         }
-        .recording-status {
-            font-size: 14px;
-            color: #dc2626;
-            font-weight: bold;
+
+        .inline-sentence {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .inline-sentence select {
+            width: auto;
+            min-width: 170px;
+            padding: 8px 12px;
+        }
+
+        audio {
+            width: 100%;
+            margin: 10px 0 14px 0;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: var(--primary);
+            color: #ffffff;
+            margin-top: 22px;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .btn:hover { opacity: 0.93; }
+        .btn:active { transform: scale(0.995); }
+
+        .btn-record {
+            display: inline-block;
+            width: auto;
+            background: var(--accent);
+            padding: 11px 22px;
+            font-size: 15px;
             margin-top: 8px;
+        }
+
+        .btn-record.recording {
+            background: #15803d;
+            animation: pulse 1.3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .record-status {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .thank-you-box {
+            text-align: center;
+            padding: 30px 15px;
+            line-height: 1.8;
+            font-size: 17px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Deutscher Einstufungstest (A1 – C1)</h2>
-    <p class="subtitle">اختبار تحديد مستوى شامل في اللغة الألمانية (استماع، قواعد، كتابة، وتحدث)</p>
+    <!-- الصفحة الأولى: بالألمانية فقط مع اللوجو -->
+    <div id="step-intro" class="step active">
+        <div class="brand-header">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img">
+            <h2>German Capsules – Herr Ahmed Nady</h2>
+            <h3>A1 Abschluss-Test</h3>
+        </div>
 
-    <!-- الخطوة 1: بيانات الطالب -->
-    <div id="user-info" class="step active">
-        <h3>Willkommen! Bitte geben Sie Ihre Daten ein:</h3>
-        <label>الاسم الكامل (Vollständiger Name):</label>
-        <input type="text" id="userName" placeholder="أدخل اسمك هنا..." required>
+        <div class="form-group">
+            <label class="field-label" for="studentName">Vollständiger Name</label>
+            <input type="text" id="studentName" placeholder="Vor- und Nachname" required>
+        </div>
 
-        <label>البريد الإلكتروني (E-Mail-Adresse):</label>
-        <input type="email" id="userEmail" placeholder="example@gmail.com" required>
+        <div class="form-group">
+            <label class="field-label" for="studentEmail">E-Mail-Adresse</label>
+            <input type="email" id="studentEmail" placeholder="name@example.com" required>
+        </div>
 
-        <button class="btn" onclick="startTest()">Test starten (ابدأ الاختبار)</button>
+        <button type="button" class="btn" onclick="startExam()">Test starten</button>
     </div>
 
-    <!-- الخطوة 2: الاختبار -->
-    <div id="test-form" class="step">
+    <!-- الصفحة الثانية: أسئلة الامتحان -->
+    <div id="step-exam" class="step">
+        <div class="brand-header">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img" style="max-width: 150px;">
+            <h2>A1 Abschluss-Test</h2>
+        </div>
 
-        <!-- Hörverstehen A1 -->
-        <div class="level-badge" style="margin-top: 0;">Niveau A1 – Hörverstehen</div>
-        <div class="question-box audio-box">
-            <span class="germ-title">Hören Sie das Audio „Waschmaschine ist kaputt“ und beantworten Sie die Fragen:</span>
+        <!-- 1. HÖREN: Beim Arzt -->
+        <div class="section-badge" style="margin-top: 0;">Hören – Beim Arzt</div>
+        <div class="question-card audio-card">
+            <div class="q-title">Hören Sie ein Gespräch beim Arzt. Was ist richtig? Wählen Sie aus.</div>
+            <!-- ضع رابط الملف الصوتي الأول هنا بدل AUDIO_1_URL -->
             <audio controls preload="auto">
-                <source src="Waschmaschine_A1.mp3" type="audio/mpeg">
+                <source src="AUDIO_1_URL" type="audio/mpeg">
                 Ihr Browser unterstützt das Audio-Element nicht.
             </audio>
 
-            <div class="sub-q">1. Was ist das Problem mit der Waschmaschine?</div>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_wasch_1" value="a"> a) Sie funktioniert nicht mehr / ist kaputt.</label>
-                <label><input type="radio" name="q_wasch_1" value="b"> b) Sie ist ganz neu.</label>
-                <label><input type="radio" name="q_wasch_1" value="c"> c) Sie wäscht nur mit kaltem Wasser.</label>
+            <div class="form-group">
+                <label class="field-label" for="h1_q1">1. Herr Zimmermann hat ...</label>
+                <select id="h1_q1">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="Halsschmerzen">Halsschmerzen</option>
+                    <option value="Rückenschmerzen">Rückenschmerzen</option>
+                    <option value="Husten">Husten</option>
+                    <option value="Ohrenschmerzen">Ohrenschmerzen</option>
+                    <option value="Schnupfen">Schnupfen</option>
+                    <option value="Fieber">Fieber</option>
+                </select>
             </div>
 
-            <div class="sub-q">2. Was muss man laut dem Text tun oder wer hilft?</div>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_wasch_2" value="a"> a) Einen Techniker / Kundendienst rufen oder das Problem melden.</label>
-                <label><input type="radio" name="q_wasch_2" value="b"> b) Die Waschmaschine sofort verkaufen.</label>
-                <label><input type="radio" name="q_wasch_2" value="c"> c) Nichts unternehmen.</label>
+            <div class="form-group">
+                <label class="field-label" for="h1_q2">2. Der Arzt sagt, das ist ...</label>
+                <select id="h1_q2">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="eine schwere Grippe">eine schwere Grippe</option>
+                    <option value="eine normale Erkältung">eine normale Erkältung</option>
+                    <option value="ein Problem mit dem Hals">ein Problem mit dem Hals</option>
+                </select>
             </div>
-        </div>
 
-        <!-- Grammatik A1 -->
-        <div class="level-badge">Niveau A1 – Grammatik</div>
-        <div class="question-box">
-            <span class="germ-title">3. Ergänzen Sie das Verb: „Ich ______ Anna und komme aus Berlin.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_a1_1" value="a"> a) bist</label>
-                <label><input type="radio" name="q_a1_1" value="b"> heiße</label>
-                <label><input type="radio" name="q_a1_1" value="c"> kommen</label>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <span class="germ-title">4. Wie lautet der richtige Artikel? „______ Tisch ist neu.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_a1_2" value="a"> a) Der</label>
-                <label><input type="radio" name="q_a1_2" value="b"> b) Die</label>
-                <label><input type="radio" name="q_a1_2" value="c"> c) Das</label>
-            </div>
-        </div>
-
-        <!-- Grammatik A2 -->
-        <div class="level-badge">Niveau A2 – Grammatik</div>
-        <div class="question-box">
-            <span class="germ-title">5. Ergänzen Sie das Verb im Präteritum: „Letztes Jahr ______ ich in Spanien.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_a2_1" value="a"> a) war</label>
-                <label><input type="radio" name="q_a2_1" value="b"> b) bin</label>
-                <label><input type="radio" name="q_a2_1" value="c"> c) hatte</label>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="field-label" for="h1_q3">3. Herr Zimmermann soll ...</label>
+                <select id="h1_q3">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="eine Woche zu Hause bleiben">eine Woche zu Hause bleiben</option>
+                    <option value="Obst und Gemüse essen">Obst und Gemüse essen</option>
+                    <option value="viel Alkohol trinken">viel Alkohol trinken</option>
+                    <option value="viel schlafen">viel schlafen</option>
+                    <option value="ins Fitnessstudio gehen">ins Fitnessstudio gehen</option>
+                    <option value="spazieren gehen">spazieren gehen</option>
+                </select>
             </div>
         </div>
 
-        <div class="question-box">
-            <span class="germ-title">6. Welche Konjunktion passt? „Ich bleibe zu Hause, ______ ich krank bin.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_a2_2" value="a"> a) weil</label>
-                <label><input type="radio" name="q_a2_2" value="b"> b) dass</label>
-                <label><input type="radio" name="q_a2_2" value="c"> c) ob</label>
+        <!-- 2. HÖREN: Freizeittrends -->
+        <div class="section-badge">Hören – Freizeittrends</div>
+        <div class="question-card audio-card">
+            <div class="q-title">Hören Sie den Bericht und ergänzen Sie die fehlenden Nomen.</div>
+            <!-- ضع رابط الملف الصوتي الثاني هنا بدل AUDIO_2_URL -->
+            <audio controls preload="auto">
+                <source src="AUDIO_2_URL" type="audio/mpeg">
+                Ihr Browser unterstützt das Audio-Element nicht.
+            </audio>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>1. Radfahren oder im</span>
+                    <select id="h2_q1">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>arbeiten – das waren einmal die beliebtesten</span>
+                    <select id="h2_q2">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>der Deutschen.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>2. Auch der</span>
+                    <select id="h2_q3">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>oder der Kinobesuch sind heute nicht mehr so beliebt wie früher.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>3. Die Deutschen sitzen lieber auf der</span>
+                    <select id="h2_q4">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>und sehen fern oder sie surfen im Internet.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>4. Vor allem junge Leute verbringen täglich mehr als vier Stunden im</span>
+                    <select id="h2_q5">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>. Sie chatten mit Freunden, sehen</span>
+                    <select id="h2_q6">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>und spielen Onlinespiele.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>5. Nur 44 Prozent der Deutschen treiben regelmäßig</span>
+                    <select id="h2_q7">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>, mehr als 50 Prozent machen keinen oder nur wenig Sport.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>6. Bei den</span>
+                    <select id="h2_q8">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>sind Fitness und Workout mit 40 Prozent am beliebtesten, auf Platz 2 liegen Wandern und Schwimmen mit 38 Prozent.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>7. 32 Prozent der Freizeitsportler joggen, 11,5 Prozent machen Yoga und 8,8 Prozent spielen</span>
+                    <select id="h2_q9">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>.</span>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <div class="inline-sentence">
+                    <span>8. Die meisten Nichtsportler sagen, sie haben für Sport zu wenig</span>
+                    <select id="h2_q10">
+                        <option value="">-- wählen --</option>
+                        <option value="Couch">Couch</option>
+                        <option value="Netz">Netz</option>
+                        <option value="Zeit">Zeit</option>
+                        <option value="Garten">Garten</option>
+                        <option value="Freizeitaktivitäten">Freizeitaktivitäten</option>
+                        <option value="Fußball">Fußball</option>
+                        <option value="Spaziergang">Spaziergang</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Sportarten">Sportarten</option>
+                        <option value="Videos">Videos</option>
+                    </select>
+                    <span>.</span>
+                </div>
             </div>
         </div>
 
-        <!-- Grammatik B1 -->
-        <div class="level-badge">Niveau B1 – Grammatik</div>
-        <div class="question-box">
-            <span class="germ-title">7. Ergänzen Sie die Konjunktion: „______ du mehr gelernt hättest, hättest du die Prüfung bestanden.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_b1_1" value="a"> a) Wenn</label>
-                <label><input type="radio" name="q_b1_1" value="b"> b) Als</label>
-                <label><input type="radio" name="q_b1_1" value="c"> c) Ob</label>
+        <!-- 3. GRAMMATIK: Was hat Marc in Berlin gemacht? -->
+        <div class="section-badge">Grammatik – Was hat Marc in Berlin gemacht?</div>
+        <div class="question-card">
+            <div class="q-title">Ergänzen Sie die Verben in der richtigen Form.</div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>1. (sehen) Er</span>
+                    <select id="g_q1">
+                        <option value="">-- wählen --</option>
+                        <option value="hat gesehen">hat gesehen</option>
+                        <option value="ist gesehen">ist gesehen</option>
+                        <option value="sah">sah</option>
+                    </select>
+                    <span>unter anderem historische Züge und Flugzeuge.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>2. (experimentieren) Er</span>
+                    <select id="g_q2">
+                        <option value="">-- wählen --</option>
+                        <option value="hat experimentiert">hat experimentiert</option>
+                        <option value="ist experimentiert">ist experimentiert</option>
+                        <option value="experimentierte">experimentierte</option>
+                    </select>
+                    <span>im Science Center Spectrum auch.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>3. (aufstehen) Heute</span>
+                    <select id="g_q3">
+                        <option value="">-- wählen --</option>
+                        <option value="ist er aufgestanden">ist er aufgestanden</option>
+                        <option value="hat er aufgestanden">hat er aufgestanden</option>
+                        <option value="stand er auf">stand er auf</option>
+                    </select>
+                    <span>gegen 9.30 Uhr.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>4. (aussteigen) Danach hat er die Buslinie 100 genommen. Beim Brandenburger Tor</span>
+                    <select id="g_q4">
+                        <option value="">-- wählen --</option>
+                        <option value="ist er ausgestiegen">ist er ausgestiegen</option>
+                        <option value="hat er ausgestiegen">hat er ausgestiegen</option>
+                        <option value="stieg er aus">stieg er aus</option>
+                    </select>
+                    <span>.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>5. (fotografieren) Er</span>
+                    <select id="g_q5">
+                        <option value="">-- wählen --</option>
+                        <option value="hat fotografiert">hat fotografiert</option>
+                        <option value="ist fotografiert">ist fotografiert</option>
+                        <option value="fotografierte">fotografierte</option>
+                    </select>
+                    <span>den Pariser Platz, das Hotel Adlon und andere Sehenswürdigkeiten.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>6. (besichtigen) Dann</span>
+                    <select id="g_q6">
+                        <option value="">-- wählen --</option>
+                        <option value="hat er besichtigt">hat er besichtigt</option>
+                        <option value="ist er besichtigt">ist er besichtigt</option>
+                        <option value="besichtigte er">besichtigte er</option>
+                    </select>
+                    <span>den Reichstag.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>7. (essen, trinken) Er</span>
+                    <select id="g_q7">
+                        <option value="">-- wählen --</option>
+                        <option value="hat ... gegessen ... und ... getrunken">hat ... gegessen ... und ... getrunken</option>
+                        <option value="ist ... gegessen ... und ... getrunken">ist ... gegessen ... und ... getrunken</option>
+                        <option value="aß ... und trank">aß ... und trank</option>
+                    </select>
+                    <span>in einem schönen Café ein Brötchen und einen Tee.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>8. (fahren) Am Nachmittag</span>
+                    <select id="g_q8">
+                        <option value="">-- wählen --</option>
+                        <option value="ist er gefahren">ist er gefahren</option>
+                        <option value="hat er gefahren">hat er gefahren</option>
+                        <option value="fuhr er">fuhr er</option>
+                    </select>
+                    <span>zur East-Side-Gallery.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>9. (machen) Dort</span>
+                    <select id="g_q9">
+                        <option value="">-- wählen --</option>
+                        <option value="hat er gemacht">hat er gemacht</option>
+                        <option value="ist er gemacht">ist er gemacht</option>
+                        <option value="machte er">machte er</option>
+                    </select>
+                    <span>auch viele Fotos.</span>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <div class="inline-sentence">
+                    <span>10. (gehen) Am Abend</span>
+                    <select id="g_q10">
+                        <option value="">-- wählen --</option>
+                        <option value="ist er gegangen">ist er gegangen</option>
+                        <option value="hat er gegangen">hat er gegangen</option>
+                        <option value="ging er">ging er</option>
+                    </select>
+                    <span>mit Alexandra in ein Restaurant.</span>
+                </div>
             </div>
         </div>
 
-        <div class="question-box">
-            <span class="germ-title">8. Ergänzen Sie das Passiv Präteritum: „Das Haus ______ im Jahr 1990 gebaut.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_b1_2" value="a"> a) ist</label>
-                <label><input type="radio" name="q_b1_2" value="b"> b) wurde</label>
-                <label><input type="radio" name="q_b1_2" value="c"> c) war</label>
+        <!-- 4. LESEN: Studentenalltag -->
+        <div class="section-badge">Lesen – Studentenalltag</div>
+        <div class="reading-box">
+            <p><strong>Studentenalltag</strong></p>
+            <p>Balkia kommt aus Karaganda. Sie kennen Karaganda nicht? Das ist eine große kasachische Stadt, und Kasachstan liegt in Zentralasien.</p>
+            <p>Balkia möchte in Deutschland Medizin studieren. Jetzt lernt sie Deutsch, sie besucht einen Intensivkurs in Köln. In ihrer Gruppe sind noch sieben andere Studentinnen und neun Studenten.</p>
+            <p>Heute ist Balkia zu spät aufgestanden: Sie hat ihren Wecker nicht gehört. Sie hat sich schnell gewaschen, angezogen und ist ohne Frühstück zur Haltestelle gelaufen. Zum Glück ist der Bus gleich gekommen. Balkia hat sich nur zehn Minuten verspätet, aber auch das war ihr unangenehm. Natürlich hat sie sich bei ihrem Lehrer entschuldigt.</p>
+            <p>In der zweiten Stunde haben alle Studenten ein Diktat geschrieben. Es war nicht sehr kompliziert, aber Balkia war etwas nervös und hat drei Fehler gemacht. Nur Anne und Alexander haben das Diktat ohne Fehler geschrieben.</p>
+            <p>Nach dem Unterricht ist Balkia mit Vanessa, Nino und Lien in die Mensa gegangen. Balkia und Lien haben Pute mit Reis gegessen, Nino hat Gemüsesuppe gewählt, und Vanessa hat sich für Schweinegulasch mit Klößen entschieden. Danach sind alle in den Park gegangen und haben neue Vokabeln wiederholt.</p>
+            <p style="margin-bottom: 0;">Um sechzehn Uhr ist Balkia nach Hause gegangen. Sie hat mit ihrem Freund telefoniert und sich mit ihm für neunzehn Uhr verabredet. Sie hat noch einen Brief geschrieben. Dann ist sie ins Zentrum gefahren. Dort hat sie sich mit Michael, ihrem Freund, verabredet. Sie sind ins Kino gegangen und haben dort eine Komödie gesehen. Nach dem Film hat Michael Balkia nach Hause gebracht. Sie war schon ziemlich müde, hat dann schnell geduscht und sich ins Bett gelegt.</p>
+        </div>
+
+        <div class="question-card">
+            <div class="q-title">Lesen Sie den Text und wählen Sie die korrekten Antworten.</div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q1">1. Woher kommt Balkia?</label>
+                <select id="l_q1">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="aus Kasachstan">aus Kasachstan</option>
+                    <option value="aus Köln">aus Köln</option>
+                    <option value="keine Information im Text">keine Information im Text</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q2">2. Wie viele Personen sind in Balkias Gruppe?</label>
+                <select id="l_q2">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="siebzehn">siebzehn</option>
+                    <option value="acht">acht</option>
+                    <option value="zehn">zehn</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q3">3. Warum ist Balkia zu spät zum Unterricht gekommen?</label>
+                <select id="l_q3">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="Der Bus hat sich verspätet.">Der Bus hat sich verspätet.</option>
+                    <option value="Balkia hatte keine Uhr.">Balkia hatte keine Uhr.</option>
+                    <option value="Balkia hat verschlafen.">Balkia hat verschlafen.</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q4">4. Wie viele Studenten haben das Diktat fehlerfrei geschrieben?</label>
+                <select id="l_q4">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="alle">alle</option>
+                    <option value="zwei">zwei</option>
+                    <option value="vier">vier</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q5">5. Wohin ist Balkia nach dem Unterricht gegangen?</label>
+                <select id="l_q5">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="in die Mensa">in die Mensa</option>
+                    <option value="in den Park">in den Park</option>
+                    <option value="ins Kino">ins Kino</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q6">6. Was hat sie gegessen?</label>
+                <select id="l_q6">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="Suppe">Suppe</option>
+                    <option value="Geflügel">Geflügel</option>
+                    <option value="Gulasch">Gulasch</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="l_q7">7. Was hat Balkia zu Hause gemacht?</label>
+                <select id="l_q7">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="Sie hat Vokabeln gelernt.">Sie hat Vokabeln gelernt.</option>
+                    <option value="Sie hat einen Brief geschrieben.">Sie hat einen Brief geschrieben.</option>
+                    <option value="Sie hat ein Buch gelesen.">Sie hat ein Buch gelesen.</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="field-label" for="l_q8">8. Wie heißt der Freund von Balkia?</label>
+                <select id="l_q8">
+                    <option value="">-- Bitte wählen --</option>
+                    <option value="Alexander">Alexander</option>
+                    <option value="Michael">Michael</option>
+                    <option value="Karaganda">Karaganda</option>
+                </select>
             </div>
         </div>
 
-        <!-- Grammatik B2 -->
-        <div class="level-badge">Niveau B2 – Grammatik</div>
-        <div class="question-box">
-            <span class="germ-title">9. Ergänzen Sie die Präposition mit Genitiv: „______ des schlechten Wetters wurde der Flug annulliert.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_b2_1" value="a"> a) Wegen</label>
-                <label><input type="radio" name="q_b2_1" value="b"> b) Trotzdem</label>
-                <label><input type="radio" name="q_b2_1" value="c"> c) Anstatt</label>
+        <!-- 5. SCHREIBEN -->
+        <div class="section-badge">Schreiben</div>
+        <div class="question-card">
+            <div class="q-title">Ergänzen Sie die E-Mail und schreiben Sie am Ende Ihren eigenen Text / Ihre Antwort:</div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <select id="s_q1">
+                        <option value="">-- wählen --</option>
+                        <option value="Liebe">Liebe</option>
+                        <option value="Sehr geehrte">Sehr geehrte</option>
+                    </select>
+                    <span>Damen und Herren,</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>ich möchte nächste Woche nach Berlin reisen und</span>
+                    <select id="s_q2">
+                        <option value="">-- wählen --</option>
+                        <option value="will">will</option>
+                        <option value="brauche">brauche</option>
+                    </select>
+                    <span>einige Informationen. Welche Hotels im Zentrum von Berlin sind preiswert? Können Sie mir eine Liste mit Hotels</span>
+                    <select id="s_q3">
+                        <option value="">-- wählen --</option>
+                        <option value="schicken">schicken</option>
+                        <option value="schreiben">schreiben</option>
+                    </select>
+                    <span>?</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>In Berlin möchte ich gerne ein Konzert in der Philharmonie</span>
+                    <select id="s_q4">
+                        <option value="">-- wählen --</option>
+                        <option value="suchen">suchen</option>
+                        <option value="besuchen">besuchen</option>
+                    </select>
+                    <span>.</span>
+                    <select id="s_q5">
+                        <option value="">-- wählen --</option>
+                        <option value="Wo">Wo</option>
+                        <option value="Woher">Woher</option>
+                    </select>
+                    <span>kann ich eine Karte kaufen?</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <span>Und zum Schluss: Berlin hat so viele Museen. Ich interessiere mich besonders für moderne Kunst. Welches Museum</span>
+                    <select id="s_q6">
+                        <option value="">-- wählen --</option>
+                        <option value="dürfen">dürfen</option>
+                        <option value="können">können</option>
+                    </select>
+                    <span>Sie mir empfehlen? Vielen Dank.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="inline-sentence">
+                    <select id="s_q7">
+                        <option value="">-- wählen --</option>
+                        <option value="Liebe">Liebe</option>
+                        <option value="Mit freundlichen">Mit freundlichen</option>
+                    </select>
+                    <span>Grüßen, John Black</span>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="field-label" for="freeWriting">Zusätzlicher Schreibteil (Schreiben Sie hier Ihren Text):</label>
+                <textarea id="freeWriting" placeholder="Schreiben Sie hier auf Deutsch..."></textarea>
             </div>
         </div>
 
-        <div class="question-box">
-            <span class="germ-title">10. Ergänzen Sie den Konjunktiv II der Vergangenheit: „Wenn ich das gewusst hätte, ______ ich dir geholfen.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_b2_2" value="a"> a) hätte</label>
-                <label><input type="radio" name="q_b2_2" value="b"> b) würde</label>
-                <label><input type="radio" name="q_b2_2" value="c"> c) wäre</label>
-            </div>
+        <!-- 6. SPRECHEN -->
+        <div class="section-badge">Sprechen</div>
+        <div class="question-card">
+            <div class="q-title">Stellen Sie sich vor und sprechen Sie über Ihren Tag.</div>
+            <button type="button" id="recordBtn" class="btn btn-record" onclick="toggleRecording()">Aufnahme starten</button>
+            <div id="recordStatus" class="record-status">Keine Aufnahme gestartet.</div>
+            <audio id="recordedAudio" controls style="display: none; margin-top: 12px;"></audio>
         </div>
 
-        <!-- Grammatik C1 -->
-        <div class="level-badge">Niveau C1 – Grammatik & Wortschatz</div>
-        <div class="question-box">
-            <span class="germ-title">11. Nominalstil: „Weil die Nachfrage gestiegen ist...“ -> „Aufgrund ______ Nachfrage...“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_c1_1" value="a"> a) der gestiegenen</label>
-                <label><input type="radio" name="q_c1_1" value="b"> b) die gestiegene</label>
-                <label><input type="radio" name="q_c1_1" value="c"> c) dem gestiegenen</label>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <span class="germ-title">12. Indirekte Rede (Konjunktiv I): „Er sagte, er ______ im Urlaub.“</span>
-            <div class="options-ltr">
-                <label><input type="radio" name="q_c1_2" value="a"> a) sei</label>
-                <label><input type="radio" name="q_c1_2" value="b"> b) wäre</label>
-                <label><input type="radio" name="q_c1_2" value="c"> c) ist</label>
-            </div>
-        </div>
-
-        <!-- الجزء الكتابي Schreiben -->
-        <div class="level-badge">Schriftlicher Ausdruck (الكتابة)</div>
-        <div class="question-box">
-            <span class="germ-title">Schreiben Sie einen kurzen Text auf Deutsch über sich selbst, Ihren Alltag oder Ihre Lernziele:</span>
-            <textarea id="writingAnswer" placeholder="Schreiben Sie hier auf Deutsch..."></textarea>
-        </div>
-
-        <!-- جزء التحدث Sprechen -->
-        <div class="level-badge">Mündlicher Ausdruck (التحدث والتسجيل الصوتي)</div>
-        <div class="question-box">
-            <span class="germ-title">Sprechen Sie auf Deutsch über sich und Ihre bisherigen Deutschkenntnisse. Klicken Sie auf Aufnahme:</span>
-            <button type="button" id="recordBtn" class="btn btn-record" onclick="toggleRecording()">🔴 ابدأ التسجيل الصوتي</button>
-            <div id="recordingStatus" class="recording-status">لم يتم التسجيل بعد</div>
-            <audio id="audioPlayback" controls style="display:none; margin-top:10px;"></audio>
-        </div>
-
-        <button class="btn" onclick="submitAnswers()">Ergebnisse absenden (إرسال الاختبار)</button>
+        <button type="button" class="btn" onclick="submitExam()">Test absenden</button>
     </div>
 
-    <!-- الخطوة 3: رسالة الشكر بدون إظهار المستوى للطالب -->
-    <div id="result-screen" class="step">
-        <h3 style="color: #16a34a;">Vielen Dank!</h3>
-        <div style="text-align: center; margin-top: 25px; font-size: 18px; line-height: 1.9;">
-            <p>لقد تم إرسال إجاباتك واختبارك بنجاح إلى إدارة الأكاديمية.</p>
-            <p>سيتم مراجعة إجاباتك والجزء الكتابي والتسجيل الصوتي وإبلاغك بتقييم مستواك قريباً.</p>
+    <!-- الصفحة الثالثة: رسالة إنهاء فقط بدون إظهار النتيجة أو المستوى للطالب -->
+    <div id="step-done" class="step">
+        <div class="brand-header">
+            <img src="logo.png" alt="German Capsules Logo" class="brand-logo-img" style="max-width: 160px;">
+            <h2>German Capsules – Herr Ahmed Nady</h2>
+        </div>
+        <div class="thank-you-box">
+            <h3>Vielen Dank für Ihre Teilnahme!</h3>
+            <p>Ihre Antworten wurden erfolgreich übermittelt und werden ausgewertet.</p>
         </div>
     </div>
 </div>
 
 <script>
-    // اختياري: إذا أردت إرسال النتيجة تلقائياً إلى Google Apps Script Web App، ضع رابط الـ Web App هنا
-    const APPS_SCRIPT_WEB_APP_URL = "";
+    // ضع هنا رابط الـ Web App الخاص بـ Google Apps Script لإرسال النتيجة إلى بريدك الإلكتروني
+    const APPS_SCRIPT_URL = "";
 
-    let mediaRecorder;
+    let mediaRecorder = null;
     let audioChunks = [];
     let isRecording = false;
-    let audioRecordedFlag = false;
+    let hasRecordedAudio = false;
 
-    function startTest() {
-        const name = document.getElementById('userName').value.trim();
-        const email = document.getElementById('userEmail').value.trim();
+    function startExam() {
+        const name = document.getElementById("studentName").value.trim();
+        const email = document.getElementById("studentEmail").value.trim();
+
         if (!name || !email) {
-            alert("Bitte füllen Sie Name und E-Mail aus!");
+            alert("Bitte füllen Sie Ihren Namen und Ihre E-Mail-Adresse aus.");
             return;
         }
-        document.getElementById('user-info').classList.remove('active');
-        document.getElementById('test-form').classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        document.getElementById("step-intro").classList.remove("active");
+        document.getElementById("step-exam").classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function toggleRecording() {
-        const recordBtn = document.getElementById('recordBtn');
-        const statusDiv = document.getElementById('recordingStatus');
-        const audioPlayback = document.getElementById('audioPlayback');
+    async function toggleRecording() {
+        const btn = document.getElementById("recordBtn");
+        const status = document.getElementById("recordStatus");
+        const player = document.getElementById("recordedAudio");
 
         if (!isRecording) {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    mediaRecorder = new MediaRecorder(stream);
-                    audioChunks = [];
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioChunks = [];
+                mediaRecorder = new MediaRecorder(stream);
 
-                    mediaRecorder.ondataavailable = event => {
-                        if (event.data.size > 0) audioChunks.push(event.data);
-                    };
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data && event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
 
-                    mediaRecorder.onstop = () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        audioPlayback.src = audioUrl;
-                        audioPlayback.style.display = 'block';
-                        audioRecordedFlag = true;
-                        stream.getTracks().forEach(track => track.stop());
-                    };
+                mediaRecorder.onstop = () => {
+                    const mimeType = mediaRecorder.mimeType || "audio/webm";
+                    const blob = new Blob(audioChunks, { type: mimeType });
+                    const url = URL.createObjectURL(blob);
+                    player.src = url;
+                    player.style.display = "block";
+                    hasRecordedAudio = true;
+                    stream.getTracks().forEach((track) => track.stop());
+                };
 
-                    mediaRecorder.start();
-                    isRecording = true;
-                    recordBtn.textContent = "⏹️ إيقاف التسجيل";
-                    recordBtn.classList.add('recording');
-                    statusDiv.textContent = "جاري التسجيل الآن... تحدث باللغة الألمانية";
-                })
-                .catch(() => {
-                    alert("تعذر الوصول إلى الميكروفون. يرجى السماح بالصلاحيات من المتصفح.");
-                });
+                mediaRecorder.start();
+                isRecording = true;
+                btn.textContent = "Aufnahme stoppen";
+                btn.classList.add("recording");
+                status.textContent = "Aufnahme läuft...";
+            } catch (err) {
+                alert("Mikrofonzugriff nicht möglich. Bitte erlauben Sie den Zugriff im Browser.");
+            }
         } else {
             mediaRecorder.stop();
             isRecording = false;
-            recordBtn.textContent = "🔴 إعادة التسجيل";
-            recordBtn.classList.remove('recording');
-            statusDiv.textContent = "تم حفظ التسجيل بنجاح! يمكنك الاستماع إليه بالأسفل.";
+            btn.textContent = "Neu aufnehmen";
+            btn.classList.remove("recording");
+            status.textContent = "Aufnahme gespeichert.";
         }
     }
 
-    function calculateLevel(correctCount, totalQuestions) {
-        const ratio = correctCount / totalQuestions;
-        if (ratio >= 0.85) return "C1";
-        if (ratio >= 0.68) return "B2";
-        if (ratio >= 0.50) return "B1";
-        if (ratio >= 0.30) return "A2";
-        return "A1";
-    }
+    function submitExam() {
+        const name = document.getElementById("studentName").value.trim();
+        const email = document.getElementById("studentEmail").value.trim();
 
-    function submitAnswers() {
-        const name = document.getElementById('userName').value.trim();
-        const email = document.getElementById('userEmail').value.trim();
-        const writingAnswer = document.getElementById('writingAnswer').value.trim();
-
-        const answerKey = {
-            q_wasch_1: 'a',
-            q_wasch_2: 'a',
-            q_a1_1: 'b',
-            q_a1_2: 'a',
-            q_a2_1: 'a',
-            q_a2_2: 'a',
-            q_b1_1: 'a',
-            q_b1_2: 'b',
-            q_b2_1: 'a',
-            q_b2_2: 'a',
-            q_c1_1: 'a',
-            q_c1_2: 'a'
+        const correctAnswers = {
+            h1_q1: "Husten",
+            h1_q2: "eine normale Erkältung",
+            h1_q3: "eine Woche zu Hause bleiben",
+            h2_q1: "Garten",
+            h2_q2: "Freizeitaktivitäten",
+            h2_q3: "Spaziergang",
+            h2_q4: "Couch",
+            h2_q5: "Netz",
+            h2_q6: "Videos",
+            h2_q7: "Sport",
+            h2_q8: "Sportarten",
+            h2_q9: "Fußball",
+            h2_q10: "Zeit",
+            g_q1: "hat gesehen",
+            g_q2: "hat experimentiert",
+            g_q3: "ist er aufgestanden",
+            g_q4: "ist er ausgestiegen",
+            g_q5: "hat fotografiert",
+            g_q6: "hat er besichtigt",
+            g_q7: "hat ... gegessen ... und ... getrunken",
+            g_q8: "ist er gefahren",
+            g_q9: "hat er gemacht",
+            g_q10: "ist er gegangen",
+            l_q1: "aus Kasachstan",
+            l_q2: "siebzehn",
+            l_q3: "Balkia hat verschlafen.",
+            l_q4: "zwei",
+            l_q5: "in die Mensa",
+            l_q6: "Geflügel",
+            l_q7: "Sie hat einen Brief geschrieben.",
+            l_q8: "Michael",
+            s_q1: "Sehr geehrte",
+            s_q2: "brauche",
+            s_q3: "schicken",
+            s_q4: "besuchen",
+            s_q5: "Wo",
+            s_q6: "können",
+            s_q7: "Mit freundlichen"
         };
 
-        let correctCount = 0;
-        const totalQuestions = Object.keys(answerKey).length;
+        let score = 0;
+        const total = Object.keys(correctAnswers).length;
+        const responses = {};
 
-        for (const qName in answerKey) {
-            const checked = document.querySelector(`input[name="${qName}"]:checked`);
-            if (checked && checked.value === answerKey[qName]) {
-                correctCount++;
+        for (const key in correctAnswers) {
+            const val = document.getElementById(key).value;
+            responses[key] = val;
+            if (val === correctAnswers[key]) {
+                score++;
             }
         }
 
-        const totalScore = Math.round((correctCount / totalQuestions) * 100);
-        const determinedLevel = calculateLevel(correctCount, totalQuestions);
+        const freeWriting = document.getElementById("freeWriting").value.trim();
 
         const payload = {
             name: name,
             email: email,
-            correctCount: correctCount,
-            totalQuestions: totalQuestions,
-            totalScore: totalScore,
-            level: determinedLevel,
-            writingAnswer: writingAnswer,
-            audioRecorded: audioRecordedFlag
+            score: score,
+            total: total,
+            percentage: Math.round((score / total) * 100),
+            responses: responses,
+            freeWriting: freeWriting,
+            hasRecordedAudio: hasRecordedAudio
         };
 
-        if (APPS_SCRIPT_WEB_APP_URL) {
-            fetch(APPS_SCRIPT_WEB_APP_URL, {
+        if (APPS_SCRIPT_URL) {
+            fetch(APPS_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
@@ -434,9 +992,9 @@
             }).catch(() => {});
         }
 
-        document.getElementById('test-form').classList.remove('active');
-        document.getElementById('result-screen').classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById("step-exam").classList.remove("active");
+        document.getElementById("step-done").classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 </script>
 
